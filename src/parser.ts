@@ -11,7 +11,10 @@ import {
 } from "./types/yt-response"
 import { ChatItem, ImageItem, MessageItem } from "./types/data"
 
-export function getOptionsFromLivePage(data: string): FetchOptions & { liveId: string } {
+export function getOptionsFromLivePage(data: string): FetchOptions & {
+  liveId: string;
+  scheduledStartTime: Date | null;
+} {
   let liveId: string
   const idResult = data.match(/<link rel="canonical" href="https:\/\/www.youtube.com\/watch\?v=(.+?)">/)
   if (idResult) {
@@ -49,12 +52,16 @@ export function getOptionsFromLivePage(data: string): FetchOptions & { liveId: s
     throw new Error("Continuation was not found")
   }
 
+  const startTimeResult = data.match(/['"]scheduledStartTime['"]:\s*['"](.+?)['"]/);
+  const scheduledStartTime = startTimeResult && new Date(parseInt(startTimeResult[1], 10) * 1000);
+
   return {
-    liveId,
-    apiKey,
-    clientVersion,
-    continuation,
-  }
+      liveId,
+      apiKey,
+      clientVersion,
+      continuation,
+      scheduledStartTime,
+  };
 }
 
 /** get_live_chat レスポンスを変換 */
