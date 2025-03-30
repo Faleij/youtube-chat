@@ -3,7 +3,7 @@ import { parseChatData, getOptionsFromLivePage } from "./parser"
 import { FetchOptions } from "./types/yt-response"
 import { ChatItem, YoutubeId } from "./types/data"
 
-const client = axios.create({
+export const client = axios.create({
   baseURL: 'https://www.youtube.com/',
   headers: {
     "Accept-Encoding": "utf-8",
