@@ -73,7 +73,7 @@ describe("LiveChat", () => {
     liveChat.on("start", onStart)
     const isStarted = await liveChat.start()
     expect(isStarted).toBe(true)
-    expect(onStart).toHaveBeenCalledWith(expect.any(String))
+    expect(onStart).toHaveBeenCalledWith(expect.any(String), undefined)
     expect(setInterval).toHaveBeenCalled()
     spy.mockRestore()
   })
